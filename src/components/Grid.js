@@ -1,9 +1,12 @@
 // import modules
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import styled from "styled-components";
 
 // import utils
-import { getTransitionRecursive } from "../utils/helper";
+import { getTransitionRecursive } from "../utils/helper.util";
+
+// import components
+import Icon from "./Icon";
 
 const GridContainer = styled.div`
   display: flex;
@@ -28,17 +31,56 @@ const GridRow = styled.div`
 `;
 
 const GridCell = styled.div`
-  background-color: purple;
-  border: 1px solid black;
+  background-color: ${({ isVisible }) => (isVisible ? "purple" : "white")};
+  border-radius: 0.4rem;
+  -webkit-box-shadow: 0.25rem 0.25rem 1rem 0.25rem black;
+  box-shadow: 0.25rem 0.25rem 1rem -0.25rem black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 1.5rem;
-  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
-  transition: opacity ${({ transitionDuration }) => transitionDuration}ms;
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: all 100ms ease-out;
 `;
+
+// handle clearTimeout answer: https://stackoverflow.com/questions/67642415/why-settimeout-is-not-triggering-inside-usecallback-reactjs
+
+const DelayCell = ({ waitTime = 500, iconName, visible = false }) => {
+  const [isVisible, setIsVisible] = useState(visible);
+  const timerRef = useRef();
+
+  const handleDelay = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    timerRef.current = setTimeout(() => {
+      setIsVisible(true);
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }, waitTime);
+  }, [waitTime, timerRef]);
+  useEffect(() => {
+    handleDelay();
+  }, [handleDelay]);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setIsVisible(true), waitTime);
+  //   return () => clearTimeout(timer);
+  // }, [waitTime]);
+
+  return (
+    <GridCell isVisible={isVisible} className="grid-child">
+      {isVisible && <Icon name={iconName} />}
+    </GridCell>
+  );
+};
 
 export default function Grid() {
   const [isVisible, setIsVisible] = useState(false);
-  const GRID_SIZE = 7;
-  const BASE_TRANSITION = 300;
+  const GRID_SIZE = 5;
+  const BASE_TRANSITION = 100;
   const gridMatrix = getTransitionRecursive(GRID_SIZE, BASE_TRANSITION);
 
   useEffect(() => {
@@ -48,11 +90,10 @@ export default function Grid() {
   const getGrid = gridMatrix.map((row, idx) => (
     <GridRow key={idx}>
       {row.map((cell, key) => (
-        <GridCell
-          isVisible={isVisible}
-          className="grid-child"
+        <DelayCell
           key={key}
-          transitionDuration={cell}
+          waitTime={cell?.duration}
+          iconName={cell?.iconName}
         />
       ))}
     </GridRow>
