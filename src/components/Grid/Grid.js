@@ -1,36 +1,13 @@
 // import modules
 import React from "react";
-import styled from "styled-components";
 
 // import utils
 import { getTransitionRecursive } from "../../utils/helper.util";
-import { useGridContext } from "../../context";
+import { useGridContext } from "./context";
 
 // import components
-import DelayCell from "./DelayCell";
-
-const GridContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 780px;
-`;
-
-const GridRow = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  > .grid-child {
-    margin: 0.5rem;
-  }
-
-  &:first-child {
-    margin-left: 0rem;
-  }
-
-  &:last-child {
-    margin-right: 0rem;
-  }
-`;
+import { GridContainer, GridRow } from "./Grid.style";
+import DelayCell from "./shared/DelayCell";
 
 const Grid = () => {
   const { gridSize } = useGridContext();
@@ -40,7 +17,7 @@ const Grid = () => {
   return (
     <GridContainer>
       {gridMatrix.map((row, idx) => (
-        <GridRow key={idx}>
+        <GridRow data-testid="grid-row" key={idx}>
           {row.map((cell, key) => (
             <DelayCell
               key={key}

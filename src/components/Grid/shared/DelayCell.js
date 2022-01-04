@@ -1,30 +1,23 @@
 // import modules
 import React, { useState, useEffect } from "react";
 import * as Icons from "react-feather";
-import styled from "styled-components";
 
 // import components
-import Icon from "../Icon";
-import Modal from "../Modal/Modal";
+import Icon from "../../Icon";
+import Modal from "../../Modal/Modal";
+import { GridCell } from "./DelayCell.style";
 
-const GridCell = styled.div`
-  align-items: center;
-  background-color: ${({ isVisible }) => (isVisible ? "#51344D" : "#FFF")};
-  border-radius: 0.4rem;
-  -webkit-box-shadow: 0.25rem 0.25rem 1rem 0.25rem black;
-  box-shadow: 0.25rem 0.25rem 1rem -0.25rem black;
-  display: flex;
-  height: 1.5rem;
-  justify-content: center;
-  padding: 1rem;
-  transition: all 100ms ease-out;
-  width: 1.5rem;
-`;
+// import context
+import { useGridContext } from "../context";
 
 const DelayCell = ({ waitTime = 500, iconName, visible = false }) => {
+  const { setShowGrid } = useGridContext();
   const [isVisible, setIsVisible] = useState(visible);
   const [showModal, setShowModal] = useState(false);
   const isLastCell = iconName === Icons.Smile;
+  const returnHandler = () => setShowGrid(false);
+  const returnText = "Yup";
+  const blurbText = "Want to try a different grid size?";
 
   // no need to put in a callback as we want to create a new grid every run
   useEffect(() => {
@@ -45,7 +38,13 @@ const DelayCell = ({ waitTime = 500, iconName, visible = false }) => {
   return (
     <GridCell isVisible={isVisible} className="grid-child">
       {isVisible && <Icon name={iconName} />}
-      {showModal && <Modal />}
+      {showModal && (
+        <Modal
+          returnHandler={returnHandler}
+          returnText={returnText}
+          blurbText={blurbText}
+        />
+      )}
     </GridCell>
   );
 };

@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 
 // import styles
-import "./styles.css";
+import "../styles.css";
 
 // import components
-import Grid from "./components/Grid/Grid";
-import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
+import Grid from "./Grid/Grid";
+import SettingsPanel from "./SettingsPanel/SettingsPanel";
 
 // import context
-import { GridContextProvider } from "./context";
+import { GridContextProvider } from "./Grid/context";
 
 const App = () => {
   // place in React.useMemo if performance gets wonky

@@ -1,6 +1,7 @@
+// import modules
 import * as Icons from "react-feather";
 
-export const getTransitionRecursive = (gridSize, baseTransitionDuration) => {
+const getTransitionRecursive = (gridSize, baseTransitionDuration) => {
   let grid = Array.from(Array(gridSize), () => new Array(gridSize));
   const lastY = gridSize % 2 === 0 ? gridSize / 2 : (gridSize - 1) / 2;
   const lastX = Math.floor((gridSize - 1) / 2);
@@ -89,3 +90,5 @@ export const getTransitionRecursive = (gridSize, baseTransitionDuration) => {
 
   return grid;
 };
+
+export { getTransitionRecursive };

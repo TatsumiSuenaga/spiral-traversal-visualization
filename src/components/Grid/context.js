@@ -13,4 +13,4 @@ const GridContextProvider = ({ values, children }) => {
   );
 };
 
-export { GridContextProvider, useGridContext };
+export { GridContext, GridContextProvider, useGridContext };

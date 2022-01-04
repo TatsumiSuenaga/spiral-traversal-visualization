@@ -1,3 +1,4 @@
+// import modules
 import React from "react";
 
 const Icon = ({ name, size = 20, color = "white" }) => {
