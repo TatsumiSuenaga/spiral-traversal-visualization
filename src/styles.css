@@ -10,6 +10,7 @@
 html,
 body,
 #root {
+  background-color: #e7ebc5;
   height: 100%;
   margin: 0rem;
   width: 100%;

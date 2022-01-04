@@ -1,17 +1,30 @@
-import "./styles.css";
-import Grid from "./components/Grid";
+// import modules
+import React, { useState } from "react";
 
-/**
- * Plan:
- *  1. design will be left column panel (collapsable?) with
- *     main middle column, maybe with a header. Finally right column
- *     with code block. Implement with Grid?
- *  2. State management? state contains grid size, maybe
- */
-export default function App() {
+// import styles
+import "./styles.css";
+
+// import components
+import Grid from "./components/Grid/Grid";
+import SettingsPanel from "./components/SettingsPanel/SettingsPanel";
+
+// import context
+import { GridContextProvider } from "./context";
+
+const App = () => {
+  // place in React.useMemo if performance gets wonky
+  const [showGrid, setShowGrid] = useState(false);
+  const [gridSize, setGridSize] = useState(5);
+
   return (
     <div className="App">
-      <Grid />
+      <GridContextProvider
+        values={{ showGrid, setShowGrid, gridSize, setGridSize }}
+      >
+        {showGrid ? <Grid /> : <SettingsPanel />}
+      </GridContextProvider>
     </div>
   );
-}
+};
+
+export default App;
