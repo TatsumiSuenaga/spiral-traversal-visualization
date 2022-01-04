@@ -1,6 +1,16 @@
 // import modules
 import * as Icons from "react-feather";
 
+/**
+ * This helper function simulates a spiral traversal by creating a gridSize x gridSize matrix
+ * where elements have incrementing duration. The duration is used to delay the render of a
+ * grid cell.
+ * Also, not optimal because this is recursive and there will be stack overflow...
+ *
+ * @param {number} gridSize - expected size of grid
+ * @param {number} baseTransitionDuration - base wait time between cell renders
+ * @returns {2D Array} - where each element is an object with an iconName and duration
+ */
 const getTransitionRecursive = (gridSize, baseTransitionDuration) => {
   let grid = Array.from(Array(gridSize), () => new Array(gridSize));
   const lastY = gridSize % 2 === 0 ? gridSize / 2 : (gridSize - 1) / 2;

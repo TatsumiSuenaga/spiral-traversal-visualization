@@ -17,7 +17,7 @@ const Grid = () => {
   return (
     <GridContainer>
       {gridMatrix.map((row, idx) => (
-        <GridRow data-testid="grid-row" key={idx}>
+        <GridRow key={idx}>
           {row.map((cell, key) => (
             <DelayCell
               key={key}

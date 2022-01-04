@@ -4,11 +4,10 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 // import context
-import { GridContextProvider } from "../context";
+import { GridContextProvider } from "../../Grid/context";
 
 // import components
-import Grid from "../Grid";
-import SettingsPanel from "../../SettingsPanel/SettingsPanel";
+import SettingsPanel from "../SettingsPanel";
 
 const customRender = (ui, { providerProps, ...renderOptions }) => {
   return render(
@@ -17,8 +16,8 @@ const customRender = (ui, { providerProps, ...renderOptions }) => {
   );
 };
 
-describe("GridContext", () => {
-  test("SettingsPanel renders", () => {
+describe("SettingsPanel", () => {
+  test("renders", () => {
     const providerProps = {
       showGrid: false,
       setShowGrid: jest.fn(),

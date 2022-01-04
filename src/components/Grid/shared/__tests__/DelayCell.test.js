@@ -1,19 +1,24 @@
 // import modules
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
+import * as Icons from "react-feather";
 
 // import components
 import DelayCell from "../DelayCell";
 
 // import context
-import { GridContextProvider } from "../../../../context";
+import { GridContextProvider } from "../../context";
 
 describe("DelayCell", () => {
-  test("renders", () => {
-    render(
+  afterEach(cleanup);
+
+  test("renders icon", async () => {
+    const { findByTestId } = render(
       <GridContextProvider>
-        <DelayCell />
+        <DelayCell iconName={Icons.Smile} />
       </GridContextProvider>
     );
+
+    expect(await findByTestId("icon")).toBeInTheDocument();
   });
 });

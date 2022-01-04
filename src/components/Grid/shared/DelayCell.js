@@ -36,8 +36,16 @@ const DelayCell = ({ waitTime = 500, iconName, visible = false }) => {
   }, [waitTime, isLastCell]);
 
   return (
-    <GridCell isVisible={isVisible} className="grid-child">
-      {isVisible && <Icon name={iconName} />}
+    <GridCell
+      isVisible={isVisible}
+      data-testid="gridCell"
+      className="grid-child"
+    >
+      {isVisible && (
+        <div data-testid="icon">
+          <Icon name={iconName} />
+        </div>
+      )}
       {showModal && (
         <Modal
           returnHandler={returnHandler}

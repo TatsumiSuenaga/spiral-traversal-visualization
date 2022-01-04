@@ -1,20 +1,33 @@
 // import modules
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, fireEvent, cleanup } from "@testing-library/react";
 
 // import components
 import Modal from "../Modal";
 
 describe("Modal", () => {
-  let returnHandler = jest.fn();
+  afterEach(cleanup);
 
-  test("renders", () => {
-    render(
-      <Modal returnHandler={jest.fn()} returnText="hi" blurbText="hello" />
+  test("renders text", () => {
+    const { getByText } = render(
+      <Modal returnHandler={jest.fn()} returnText="button" blurbText="hello" />
     );
 
-    screen.debug();
+    expect(getByText("button")).toBeInTheDocument();
+    expect(getByText("hello")).toBeInTheDocument();
+  });
 
-    expect(screen.getByText("hi")).toBeInTheDocument();
+  test("onClick triggers returnHandler", () => {
+    const returnHandler = jest.fn();
+    const { getByText } = render(
+      <Modal
+        returnHandler={returnHandler}
+        returnText="button"
+        blurbText="hello"
+      />
+    );
+    expect(returnHandler).not.toBeCalled();
+    fireEvent.click(getByText(/button/));
+    expect(returnHandler).toHaveBeenCalledTimes(1);
   });
 });
